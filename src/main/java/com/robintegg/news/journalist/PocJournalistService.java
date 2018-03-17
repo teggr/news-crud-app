@@ -55,11 +55,7 @@ public class PocJournalistService implements JournalistService {
 
 	@Override
 	public NewsStory getNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
-		try {
-			return journalistRepository.getOne(journalistId).getPublishedNewsStory(newsStoryId);
-		} catch (Exception e) {
-			throw new NewsStoryNotFoundException(journalistId, newsStoryId, e);
-		}
+		return journalistRepository.getOne(journalistId).getPublishedNewsStory(newsStoryId);
 	}
 
 	@Override

@@ -14,14 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.robintegg.news.journalist.Copy;
-import com.robintegg.news.journalist.Journalist;
-import com.robintegg.news.journalist.JournalistId;
-import com.robintegg.news.journalist.JournalistRegistration;
-import com.robintegg.news.journalist.JournalistService;
-import com.robintegg.news.journalist.NewsStory;
-import com.robintegg.news.journalist.NewsStoryId;
-
 /**
  * Test for the {@link Journalist} feature
  * 
@@ -111,6 +103,9 @@ public class JournalistServiceTest {
 		NewsStoryId newsStoryId = journalistService.publish(journalistId, copy);
 
 		// then
+		List<NewsStory> newsStories = journalistService.getNewsStories(journalistId);
+		assertEquals(1, newsStories.size());
+
 		NewsStory newsStory = journalistService.getNewsStory(journalistId, newsStoryId);
 		assertEquals(copy, newsStory.getCopy());
 		assertEquals(newsStoryId, newsStory.getNewsStoryId());
@@ -146,7 +141,7 @@ public class JournalistServiceTest {
 
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NewsStoryNotFoundException.class)
 	public void shouldRedactJournalistNewsStory() {
 
 		// givens
@@ -160,8 +155,8 @@ public class JournalistServiceTest {
 		// then
 		try {
 			journalistService.getNewsStory(journalistId, newsStoryId);
-		} catch (Exception e) {
-			assertEquals("could not find " + journalistId, e.getMessage());
+		} catch (NewsStoryNotFoundException e) {
+			assertEquals("Could not find NewsStory title by robin", e.getMessage());
 			throw e;
 		}
 

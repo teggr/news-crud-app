@@ -75,7 +75,8 @@ public class Journalist {
 	}
 
 	public NewsStory getPublishedNewsStory(NewsStoryId newsStoryId) {
-		return newsStories.stream().filter(ns -> ns.getNewsStoryId().equals(newsStoryId)).findFirst().orElse(null);
+		return newsStories.stream().filter(ns -> ns.getNewsStoryId().equals(newsStoryId)).findFirst()
+				.orElseThrow(() -> new NewsStoryNotFoundException(journalistId, newsStoryId));
 	}
 
 	public NewsStory updateNewsStory(NewsStoryId newsStoryId, Copy copy) {
