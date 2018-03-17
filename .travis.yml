@@ -10,4 +10,4 @@ jdk:
 # noop to override travis default
 install: true
 script:
-  - mvn clean package jacoco:report site dockerfile:build dockerfile:push -B -V -Dgithub.global.userName=${github_username} -Dgithub.global.password=${github_password} -Ddockerfile.username=${docker_hub_username} -Ddockerfile.password=${docker_hub_password}
+  - mvn clean package dockerfile:build dockerfile:push -B -V -Dgithub.global.userName=${github_username} -Dgithub.global.password=${github_password} -Ddockerfile.username=${docker_hub_username} -Ddockerfile.password=${docker_hub_password}
