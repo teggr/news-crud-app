@@ -110,6 +110,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<outputDirectory>${project.build.outputDirectory}/static/jacoco</outputDirectory>
+				</configuration>
 			</plugin>
 
 			<!-- spring boot -->

@@ -1,11 +1,21 @@
-# Running tests for code coverage
+# Build, Report and Deploy
 
-	mvn test jacoco:report
-	
-# Access to Swagger UI
-
-http://localhost:8080/swagger-ui.html
+	mvn clean package dockerfile:build dockerfile:push
 
 # CI
 
-https://travis-ci.org/teggr/news-crud-app
+Build status: ![Build status image](https://travis-ci.org/teggr/news-crud-app.svg?branch=master)
+
+https://travis-ci.org/teggr/news-crud-app	
+	
+# Docker 
+
+https://hub.docker.com/r/teggr/news-crud-app/
+
+	docker run -p 8080:8080 teggr/news-crud-app:0.0.1-SNAPSHOT
+
+# Web application
+
+* Home page: http://localhost:8080/
+* Swagger Documentation: http://localhost:8080/swagger-ui.html
+* Code coverage report: http://localhost:8080/jacoco/index.html
