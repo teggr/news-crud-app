@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8">
+<meta name="description" content="News Crud Example">
+<meta name="author" content="Robin Tegg">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Breaking News</title>
+
+</head>
+
+<body>
+	<h1>Breaking News</h1>
+	<ul th:if="${!breakingNews.isEmpty()}" >
+		<li th:each="resource : ${breakingNews}"><a th:href="${resource.getLink('self').href}" th:text="${resource.content.headline}">A great headline</a>
+	</ul>
+	<p th:if="${breakingNews.isEmpty()}">No breaking news right now</p>
+	<hr/>
+	<a th:href="@{/}">Home</a>
+</body>
+</html>

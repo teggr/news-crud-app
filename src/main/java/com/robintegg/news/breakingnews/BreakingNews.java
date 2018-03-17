@@ -6,7 +6,7 @@ import com.robintegg.news.journalist.NewsStory;
 import com.robintegg.news.journalist.NewsStoryId;
 
 /**
- * Headline focussed view on a {@link NewsStory}
+ * Headline focused view on a {@link NewsStory}
  * 
  * @author robin
  *
