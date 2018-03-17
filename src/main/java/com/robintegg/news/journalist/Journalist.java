@@ -84,6 +84,7 @@ public class Journalist {
 	}
 
 	public void retractNewsStory(NewsStoryId newsStoryId) {
+		getPublishedNewsStory(newsStoryId);
 		newsStories.removeIf(ns -> ns.getNewsStoryId().equals(newsStoryId));
 	}
 

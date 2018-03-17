@@ -3,6 +3,7 @@ package com.robintegg.news.rest;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import com.robintegg.news.journalist.JournalistId;
 import com.robintegg.news.journalist.JournalistService;
 import com.robintegg.news.journalist.NewsStory;
 import com.robintegg.news.journalist.NewsStoryId;
+import com.robintegg.news.journalist.NewsStoryNotFoundException;
 
 @RestController
 @RequestMapping("/journalists/{journalistId}/news-stories/{newsStoryId}")
@@ -45,6 +47,11 @@ public class JournalistNewsStoryController {
 			@PathVariable("newsStoryId") String newsStoryId) {
 		journalistService.redactNewsStory(new JournalistId(journalistId), new NewsStoryId(newsStoryId));
 		return ResponseEntity.noContent().build();
+	}
+
+	@ExceptionHandler(NewsStoryNotFoundException.class)
+	public ResponseEntity<String> newsStoryNotFound() {
+		return ResponseEntity.notFound().build();
 	}
 
 }

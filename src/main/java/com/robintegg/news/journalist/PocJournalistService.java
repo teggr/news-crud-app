@@ -37,17 +37,21 @@ public class PocJournalistService implements JournalistService {
 
 	@Override
 	public Journalist getJournalist(JournalistId journalistId) {
-		return journalistRepository.getOne(journalistId);
+		Journalist journalist = journalistRepository.findOne(journalistId);
+		if (journalist == null) {
+			throw new JournalistNotFoundException(journalistId);
+		}
+		return journalist;
 	}
 
 	@Override
 	public List<NewsStory> getNewsStories(JournalistId journalistId) {
-		return journalistRepository.getOne(journalistId).getAllPublishedNewsStories();
+		return getJournalist(journalistId).getAllPublishedNewsStories();
 	}
 
 	@Override
 	public NewsStoryId publish(JournalistId journalistId, Copy copy) {
-		Journalist journalist = journalistRepository.getOne(journalistId);
+		Journalist journalist = journalistRepository.findOne(journalistId);
 		NewsStoryId newsStoryId = journalist.publish(copy);
 		journalistRepository.save(journalist);
 		return newsStoryId;
@@ -55,12 +59,12 @@ public class PocJournalistService implements JournalistService {
 
 	@Override
 	public NewsStory getNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
-		return journalistRepository.getOne(journalistId).getPublishedNewsStory(newsStoryId);
+		return getJournalist(journalistId).getPublishedNewsStory(newsStoryId);
 	}
 
 	@Override
 	public NewsStory updateNewsStory(JournalistId journalistId, NewsStoryId newsStoryId, Copy copy) {
-		Journalist journalist = journalistRepository.getOne(journalistId);
+		Journalist journalist = getJournalist(journalistId);
 		NewsStory updatedNewsStory = journalist.updateNewsStory(newsStoryId, copy);
 		journalistRepository.save(journalist);
 		return updatedNewsStory;
@@ -68,7 +72,7 @@ public class PocJournalistService implements JournalistService {
 
 	@Override
 	public void redactNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
-		Journalist journalist = journalistRepository.getOne(journalistId);
+		Journalist journalist = getJournalist(journalistId);
 		journalist.retractNewsStory(newsStoryId);
 		journalistRepository.save(journalist);
 	}
