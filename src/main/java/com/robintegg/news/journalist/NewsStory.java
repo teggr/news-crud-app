@@ -83,4 +83,9 @@ public class NewsStory implements Comparable<NewsStory> {
 		return this;
 	}
 
+	@JsonIgnore
+	public JournalistId getJournalistId() {
+		return journalist.getJournalistId();
+	}
+
 }

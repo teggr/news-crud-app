@@ -19,7 +19,7 @@ import com.robintegg.news.journalist.NewsStoryId;
 import com.robintegg.news.journalist.NewsStoryNotFoundException;
 
 @RestController
-@RequestMapping("/journalists/{journalistId}/news-stories/{newsStoryId}")
+@RequestMapping("/api/journalists/{journalistId}/news-stories/{newsStoryId}")
 public class JournalistNewsStoryController {
 
 	private JournalistService journalistService;
@@ -31,14 +31,14 @@ public class JournalistNewsStoryController {
 	@GetMapping
 	public Resource<NewsStory> get(@PathVariable("journalistId") String journalistId,
 			@PathVariable("newsStoryId") String newsStoryId) {
-		return JournalistResourceFactory.newsStory(
+		return JournalistResourceFactory.newsStoryResource(
 				journalistService.getNewsStory(new JournalistId(journalistId), new NewsStoryId(newsStoryId)));
 	}
 
 	@PatchMapping
 	public Resource<NewsStory> patch(@PathVariable("journalistId") String journalistId,
 			@PathVariable("newsStoryId") String newsStoryId, @RequestBody Copy copy) {
-		return JournalistResourceFactory.newsStory(
+		return JournalistResourceFactory.newsStoryResource(
 				journalistService.updateNewsStory(new JournalistId(journalistId), new NewsStoryId(newsStoryId), copy));
 	}
 

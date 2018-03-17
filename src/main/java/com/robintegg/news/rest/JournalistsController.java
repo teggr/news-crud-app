@@ -18,7 +18,7 @@ import com.robintegg.news.journalist.JournalistRegistration;
 import com.robintegg.news.journalist.JournalistService;
 
 @RestController
-@RequestMapping("/journalists")
+@RequestMapping("/api/journalists")
 public class JournalistsController {
 
 	private JournalistService journalistService;
@@ -29,13 +29,13 @@ public class JournalistsController {
 
 	@GetMapping
 	public List<Resource<Journalist>> getAll() {
-		return journalistService.getAllJournalists().stream().map(JournalistResourceFactory::journalist)
+		return journalistService.getAllJournalists().stream().map(JournalistResourceFactory::journalistResource)
 				.collect(Collectors.toList());
 	}
 
 	@GetMapping(params = "name")
 	public List<Resource<Journalist>> getAllWithQuery(@RequestParam("name") String name) {
-		return journalistService.searchJournalists(name).stream().map(JournalistResourceFactory::journalist)
+		return journalistService.searchJournalists(name).stream().map(JournalistResourceFactory::journalistResource)
 				.collect(Collectors.toList());
 	}
 

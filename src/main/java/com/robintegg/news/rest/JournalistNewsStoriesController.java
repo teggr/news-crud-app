@@ -19,7 +19,7 @@ import com.robintegg.news.journalist.NewsStory;
 import com.robintegg.news.journalist.NewsStoryId;
 
 @RestController
-@RequestMapping("/journalists/{journalistId}/news-stories")
+@RequestMapping("/api/journalists/{journalistId}/news-stories")
 public class JournalistNewsStoriesController {
 
 	private JournalistService journalistService;
@@ -31,7 +31,7 @@ public class JournalistNewsStoriesController {
 	@GetMapping
 	public List<Resource<NewsStory>> getAll(@PathVariable("journalistId") String journalistId) {
 		return journalistService.getNewsStories(new JournalistId(journalistId)).stream()
-				.map(JournalistResourceFactory::newsStory).collect(Collectors.toList());
+				.map(JournalistResourceFactory::newsStoryResource).collect(Collectors.toList());
 	}
 
 	@PostMapping

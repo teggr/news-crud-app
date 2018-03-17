@@ -14,7 +14,7 @@ import com.robintegg.news.journalist.JournalistNotFoundException;
 import com.robintegg.news.journalist.JournalistService;
 
 @RestController
-@RequestMapping("/journalists/{journalistId}")
+@RequestMapping("/api/journalists/{journalistId}")
 public class JournalistController {
 
 	private JournalistService journalistService;
@@ -25,7 +25,8 @@ public class JournalistController {
 
 	@GetMapping
 	public Resource<Journalist> get(@PathVariable("journalistId") String journalistId) {
-		return JournalistResourceFactory.journalist(journalistService.getJournalist(new JournalistId(journalistId)));
+		return JournalistResourceFactory
+				.journalistResource(journalistService.getJournalist(new JournalistId(journalistId)));
 	}
 
 	@ExceptionHandler(JournalistNotFoundException.class)
