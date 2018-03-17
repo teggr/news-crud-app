@@ -4,16 +4,24 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class PocJournalistService implements JournalistService {
+public class PocJournalistService implements JournalistService, ApplicationEventPublisherAware {
 
 	private JournalistRepository journalistRepository;
+	private ApplicationEventPublisher applicationEventPublisher;
 
 	public PocJournalistService(JournalistRepository journalistRepository) {
 		this.journalistRepository = journalistRepository;
+	}
+
+	@Override
+	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
 	@Override
@@ -52,9 +60,10 @@ public class PocJournalistService implements JournalistService {
 	@Override
 	public NewsStoryId publish(JournalistId journalistId, Copy copy) {
 		Journalist journalist = journalistRepository.findOne(journalistId);
-		NewsStoryId newsStoryId = journalist.publish(copy);
+		NewsStory newsStory = journalist.publish(copy);
 		journalistRepository.save(journalist);
-		return newsStoryId;
+		applicationEventPublisher.publishEvent(new NewsStoryPublishedEvent(newsStory));
+		return newsStory.getNewsStoryId();
 	}
 
 	@Override
@@ -67,14 +76,16 @@ public class PocJournalistService implements JournalistService {
 		Journalist journalist = getJournalist(journalistId);
 		NewsStory updatedNewsStory = journalist.updateNewsStory(newsStoryId, copy);
 		journalistRepository.save(journalist);
+		applicationEventPublisher.publishEvent(new NewsStoryUpdatedEvent(updatedNewsStory));
 		return updatedNewsStory;
 	}
 
 	@Override
-	public void redactNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
+	public void retractNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
 		Journalist journalist = getJournalist(journalistId);
 		journalist.retractNewsStory(newsStoryId);
 		journalistRepository.save(journalist);
+		applicationEventPublisher.publishEvent(new NewsStoryRetractedEvent(newsStoryId));
 	}
 
 }

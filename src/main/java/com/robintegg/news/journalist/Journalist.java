@@ -68,10 +68,10 @@ public class Journalist {
 		return newsStories.stream().sorted().collect(Collectors.toList());
 	}
 
-	public NewsStoryId publish(Copy copy) {
+	public NewsStory publish(Copy copy) {
 		NewsStory newsStory = NewsStory.fromCopy(copy, this);
 		newsStories.add(newsStory);
-		return newsStory.getNewsStoryId();
+		return newsStory;
 	}
 
 	public NewsStory getPublishedNewsStory(NewsStoryId newsStoryId) {

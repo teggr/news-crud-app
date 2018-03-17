@@ -28,15 +28,14 @@ public class JournalistsController {
 	}
 
 	@GetMapping
-	public List<Resource<Journalist>> getAll() {
+	public List<Resource<Journalist>> get() {
 		return journalistService.getAllJournalists().stream().map(JournalistResourceFactory::journalistResource)
 				.collect(Collectors.toList());
 	}
 
 	@GetMapping(params = "name")
-	public List<Resource<Journalist>> getAllWithQuery(@RequestParam("name") String name) {
-		return journalistService.searchJournalists(name).stream().map(JournalistResourceFactory::journalistResource)
-				.collect(Collectors.toList());
+	public List<Resource<Journalist>> getWithNameQuery(@RequestParam("name") String name) {
+		return JournalistResourceFactory.journalistResources(journalistService.searchJournalists(name));
 	}
 
 	@PostMapping

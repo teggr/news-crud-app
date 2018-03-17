@@ -5,6 +5,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -34,14 +36,14 @@ public class JournalistResourceFactory {
 	}
 
 	public static ControllerLinkBuilder linkToJournalists() {
-		return linkTo(methodOn(JournalistsController.class).getAll());
+		return linkTo(methodOn(JournalistsController.class).get());
 	}
 
 	public static URI journalistResourceUri(JournalistId journalistId) {
 		return linkToJournalist(journalistId).toUri();
 	}
 
-	private static ControllerLinkBuilder linkToJournalist(JournalistId journalistId) {
+	public static ControllerLinkBuilder linkToJournalist(JournalistId journalistId) {
 		return linkTo(methodOn(JournalistController.class).get(journalistId.asString()));
 	}
 
@@ -54,7 +56,7 @@ public class JournalistResourceFactory {
 		return resource;
 	}
 
-	private static ControllerLinkBuilder linkToNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
+	public static ControllerLinkBuilder linkToNewsStory(JournalistId journalistId, NewsStoryId newsStoryId) {
 		return linkTo(
 				methodOn(JournalistNewsStoryController.class).get(journalistId.asString(), newsStoryId.asString()));
 	}
@@ -63,6 +65,10 @@ public class JournalistResourceFactory {
 		return linkTo(
 				methodOn(JournalistNewsStoryController.class).get(journalistId.asString(), newsStoryId.asString()))
 						.toUri();
+	}
+
+	public static List<Resource<Journalist>> journalistResources(List<Journalist> journalists) {
+		return journalists.stream().map(JournalistResourceFactory::journalistResource).collect(Collectors.toList());
 	}
 
 }

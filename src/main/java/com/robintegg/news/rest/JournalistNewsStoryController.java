@@ -45,7 +45,7 @@ public class JournalistNewsStoryController {
 	@DeleteMapping
 	public ResponseEntity<NewsStory> delete(@PathVariable("journalistId") String journalistId,
 			@PathVariable("newsStoryId") String newsStoryId) {
-		journalistService.redactNewsStory(new JournalistId(journalistId), new NewsStoryId(newsStoryId));
+		journalistService.retractNewsStory(new JournalistId(journalistId), new NewsStoryId(newsStoryId));
 		return ResponseEntity.noContent().build();
 	}
 

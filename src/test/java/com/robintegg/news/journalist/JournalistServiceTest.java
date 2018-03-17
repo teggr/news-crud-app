@@ -150,7 +150,7 @@ public class JournalistServiceTest {
 		NewsStoryId newsStoryId = journalistService.publish(journalistId, copy);
 
 		// when
-		journalistService.redactNewsStory(journalistId, newsStoryId);
+		journalistService.retractNewsStory(journalistId, newsStoryId);
 
 		// then
 		try {

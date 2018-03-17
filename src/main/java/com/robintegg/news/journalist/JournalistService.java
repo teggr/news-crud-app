@@ -54,9 +54,9 @@ public interface JournalistService {
 	NewsStory updateNewsStory(JournalistId journalistId, NewsStoryId newsStoryId, Copy copy);
 
 	/**
-	 * Redact a {@link NewsStory} from the platform published by the
+	 * Retract a {@link NewsStory} from the platform published by the
 	 * {@link Journalist}
 	 */
-	void redactNewsStory(JournalistId journalistId, NewsStoryId newsStoryId);
+	void retractNewsStory(JournalistId journalistId, NewsStoryId newsStoryId);
 
 }
